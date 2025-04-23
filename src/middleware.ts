@@ -18,8 +18,8 @@ const authRoutes = [
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   
-  // Kiểm tra xem người dùng đã đăng nhập chưa (sẽ được thay thế bằng logic thực tế với Supabase)
-  const isAuthenticated = request.cookies.has('auth-token'); // Giả định có cookie auth-token khi đăng nhập
+  // Kiểm tra xem người dùng đã đăng nhập chưa (dựa vào cookie Supabase)
+  const isAuthenticated = request.cookies.has('sb-access-token'); // Cookie Supabase lưu access token
 
   // Nếu đang truy cập route cần xác thực nhưng chưa đăng nhập
   if (protectedRoutes.some(route => pathname.startsWith(route)) && !isAuthenticated) {

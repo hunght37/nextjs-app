@@ -12,7 +12,7 @@ export const createClient_client = () => {
 
 // Tạo Supabase client cho phía server
 export const createClient_server = () => {
-  const cookieStore = cookies();
+  const cookieStore = await cookies();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
   

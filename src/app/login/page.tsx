@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
+import { createClient_client } from "@/lib/supabase";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -16,13 +17,17 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // TODO: Thêm logic xác thực với Supabase
-    
-    setTimeout(() => {
+    const email = (e.currentTarget.elements.namedItem("email") as HTMLInputElement).value;
+    const password = (e.currentTarget.elements.namedItem("password") as HTMLInputElement).value;
+    const supabase = createClient_client();
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) {
+      alert("Đăng nhập thất bại: " + error.message);
       setIsLoading(false);
-      router.push("/dashboard");
-    }, 1000);
+      return;
+    }
+    router.push("/dashboard");
+    setIsLoading(false);
   };
 
   return (

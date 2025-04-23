@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { createClient_client } from "@/lib/supabase";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -15,13 +16,24 @@ export default function RegisterPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // TODO: Thêm logic đăng ký với Supabase
-    
-    setTimeout(() => {
+    const email = (e.currentTarget.elements.namedItem("email") as HTMLInputElement).value;
+    const password = (e.currentTarget.elements.namedItem("password") as HTMLInputElement).value;
+    const confirmPassword = (e.currentTarget.elements.namedItem("confirmPassword") as HTMLInputElement).value;
+    if (password !== confirmPassword) {
+      alert("Mật khẩu xác nhận không khớp.");
       setIsLoading(false);
-      router.push("/login");
-    }, 1000);
+      return;
+    }
+    const supabase = createClient_client();
+    const { error } = await supabase.auth.signUp({ email, password });
+    if (error) {
+      alert("Đăng ký thất bại: " + error.message);
+      setIsLoading(false);
+      return;
+    }
+    alert("Đăng ký thành công! Vui lòng kiểm tra email để xác nhận tài khoản.");
+    router.push("/login");
+    setIsLoading(false);
   };
 
   return (
