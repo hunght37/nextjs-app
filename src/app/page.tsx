@@ -22,11 +22,11 @@ export default function Home() {
             <CardDescription className="text-center">Quản lý công việc hiệu quả, đơn giản và nhanh chóng</CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-4">
-            <Button className="w-full" size="lg">
-              Đăng nhập
+            <Button className="w-full" size="lg" asChild>
+              <Link href="/login">Đăng nhập</Link>
             </Button>
-            <Button className="w-full" variant="outline" size="lg">
-              Đăng ký
+            <Button className="w-full" variant="outline" size="lg" asChild>
+              <Link href="/register">Đăng ký</Link>
             </Button>
           </CardContent>
           <CardFooter className="flex justify-center text-sm text-muted-foreground">
@@ -85,6 +85,5 @@ export default function Home() {
         </Card>
       </div>
     </main>
-    </div>
   );
 }

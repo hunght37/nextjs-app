@@ -19,7 +19,8 @@ export const createClient_server = () => {
   return createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
       get(name) {
-        return cookieStore.get(name)?.value;
+        const cookie = cookieStore.get(name)?.value;
+        return cookie ? cookie.value : undefined;
       },
       set(name, value, options) {
         cookieStore.set({ name, value, ...options });
