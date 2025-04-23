@@ -11,7 +11,7 @@ export const createClient_client = () => {
 };
 
 // Tạo Supabase client cho phía server
-export const createClient_server = () => {
+export const createClient_server = async () => {
   const cookieStore = await cookies();
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
@@ -20,7 +20,7 @@ export const createClient_server = () => {
     cookies: {
       get(name) {
         const cookie = cookieStore.get(name)?.value;
-        return cookie ? cookie.value : undefined;
+        return cookie || undefined;
       },
       set(name, value, options) {
         cookieStore.set({ name, value, ...options });

@@ -36,5 +36,12 @@ export function middleware(request: NextRequest) {
 
 // Chỉ áp dụng middleware cho các routes cụ thể
 export const config = {
-  matcher: [...protectedRoutes, ...authRoutes],
+  matcher: [
+    '/dashboard/:path*',
+    '/profile/:path*',
+    '/(protected)/:path*',
+    '/login',
+    '/register',
+    '/forgot-password'
+  ]
 };
