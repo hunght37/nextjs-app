@@ -5,6 +5,7 @@ import type { NextRequest } from 'next/server';
 const protectedRoutes = [
   '/dashboard',
   '/profile',
+  '/(protected)',
 ];
 
 // Các routes dành cho người dùng chưa đăng nhập

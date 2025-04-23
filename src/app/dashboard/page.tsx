@@ -6,15 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { ModeToggle } from "@/components/mode-toggle";
-import { Checkbox } from "@/components/ui/checkbox";
+import { TaskItem, Task } from "@/components/task-item";
 
-// Định nghĩa kiểu dữ liệu cho task
-type Task = {
-  id: string;
-  title: string;
-  completed: boolean;
-  createdAt: Date;
-};
 
 export default function DashboardPage() {
   // State cho danh sách task và task mới
@@ -161,35 +154,12 @@ export default function DashboardPage() {
               </Card>
             ) : (
               filteredTasks.map((task) => (
-                <Card key={task.id} className="overflow-hidden">
-                  <CardContent className="p-0">
-                    <div className="flex items-center p-4">
-                      <div className="flex items-start gap-3 flex-1">
-                        <Checkbox
-                          checked={task.completed}
-                          onCheckedChange={() => toggleTaskCompletion(task.id)}
-                          className="mt-1"
-                        />
-                        <div className="space-y-1">
-                          <p className={`font-medium ${task.completed ? "line-through text-muted-foreground" : ""}`}>
-                            {task.title}
-                          </p>
-                          <p className="text-xs text-muted-foreground">
-                            Tạo lúc: {task.createdAt.toLocaleString()}
-                          </p>
-                        </div>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => deleteTask(task.id)}
-                        className="text-destructive hover:text-destructive/90 hover:bg-destructive/10"
-                      >
-                        Xóa
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  onToggleComplete={toggleTaskCompletion}
+                  onDelete={deleteTask}
+                />
               ))
             )}
           </div>
